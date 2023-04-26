@@ -10,8 +10,11 @@ public class Movie {
 	@Id
 	private int movieId;
 	private String movieName;
-	private String theatreName;
+	private String theatre;
 	private int totalNoOfTicketAlloated;
+
+	
+	
 	
 
 }

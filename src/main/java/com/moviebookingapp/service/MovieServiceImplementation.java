@@ -39,6 +39,15 @@ public class MovieServiceImplementation implements MovieService{
 		}
 		return false;
 	}
+
+	@Override
+	public Movie getMovieById(int movieId){
+		Optional<Movie> findById = movieRepository.findById(movieId);
+		if(findById.isPresent()) {
+			return movieRepository.findById(movieId).get();
+		}
+		return null;
+	}
 	
 
 }

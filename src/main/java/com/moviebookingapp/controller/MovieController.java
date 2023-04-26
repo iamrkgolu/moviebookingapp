@@ -32,6 +32,15 @@ public class MovieController {
 		}
 		return new ResponseEntity<String>("Movies List Empty!!", HttpStatus.NO_CONTENT);
 	}
+	
+	@GetMapping(value = "/movies/search/{movieId}")
+	public ResponseEntity<?> getMovieById(@PathVariable("movieId") int movieId){
+		Movie movie = movieService.getMovieById(movieId);
+		if (movie != null) {
+			return new ResponseEntity<Movie>(movie, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Movies List Empty!!", HttpStatus.NO_CONTENT);
+	}
 
 	@PostMapping(value = "/admin/addmovie")
 	public ResponseEntity<?> addMovie(@RequestBody Movie movie) throws MovieIdAlreadyExistsExceptions {

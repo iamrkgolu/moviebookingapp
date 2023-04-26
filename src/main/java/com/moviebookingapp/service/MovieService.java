@@ -13,4 +13,6 @@ public interface MovieService {
 
 	boolean deleteMovie(int movieId);
 
+	Movie getMovieById(int movieId);
+
 }
