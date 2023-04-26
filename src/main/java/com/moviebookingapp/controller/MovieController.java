@@ -32,9 +32,9 @@ public class MovieController {
 		}
 		return new ResponseEntity<String>("Movies List Empty!!", HttpStatus.NO_CONTENT);
 	}
-	
+
 	@GetMapping(value = "/movies/search/{movieId}")
-	public ResponseEntity<?> getMovieById(@PathVariable("movieId") int movieId){
+	public ResponseEntity<?> getMovieById(@PathVariable("movieId") int movieId) {
 		Movie movie = movieService.getMovieById(movieId);
 		if (movie != null) {
 			return new ResponseEntity<Movie>(movie, HttpStatus.OK);
@@ -50,19 +50,13 @@ public class MovieController {
 
 		return new ResponseEntity<String>("Movie object is null", HttpStatus.NO_CONTENT);
 	}
-	
-	@DeleteMapping(value = "/admin/delete/{movieId}")
-	public ResponseEntity<?> deleteMovie(@PathVariable ("movieId") int movieId)
-	{
-		if(movieService.deleteMovie(movieId))
-		{
-			return new ResponseEntity<String>("Movie got deleted successfully",HttpStatus.OK);
-		}
-		
-		return new ResponseEntity<String>("Movie did not get deleted ",HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	/*
-	 * 
-	 */
 
+	@DeleteMapping(value = "/admin/delete/{movieId}")
+	public ResponseEntity<?> deleteMovie(@PathVariable("movieId") int movieId) {
+		if (movieService.deleteMovie(movieId)) {
+			return new ResponseEntity<String>("Movie got deleted successfully", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("Movie did not get deleted ", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }
