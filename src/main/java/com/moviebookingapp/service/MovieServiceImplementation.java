@@ -24,7 +24,8 @@ public class MovieServiceImplementation implements MovieService{
 	@Override
 	public Movie addMovie(Movie movie) throws MovieIdAlreadyExistsExceptions{
 		Optional<Movie> findById = movieRepository.findById(movie.getMovieId());
-		if(findById.isPresent()) {
+		Movie findByMovieName = movieRepository.findByMovieName(movie.getMovieName());
+		if(findById.isPresent() || findByMovieName!=null) {
 			throw new MovieIdAlreadyExistsExceptions();
 		}
 		return movieRepository.saveAndFlush(movie);
@@ -45,6 +46,26 @@ public class MovieServiceImplementation implements MovieService{
 		Optional<Movie> findById = movieRepository.findById(movieId);
 		if(findById.isPresent()) {
 			return movieRepository.findById(movieId).get();
+		}
+		return null;
+	}
+
+	@Override
+	public Movie getMovieByMovieName(String movieName) {
+		return movieRepository.findByMovieName(movieName);
+	}
+
+	@Override
+	public Movie updateMovie(String movieName, Movie movie) {
+		Movie findByMovieName = movieRepository.findByMovieName(movieName);
+		if(findByMovieName!=null) {
+			Movie movie2=new Movie();
+			movie2.setMovieName(movieName);
+			movie2.setTheatre(movie.getTheatre());
+			movie2.setTotalNoOfTicketAlloated(movie.getTotalNoOfTicketAlloated());
+			movie2.setMovieId(movie.getMovieId());
+			movie2.setTicketId(movie.getTicketId());
+			return movieRepository.saveAndFlush(movie2);
 		}
 		return null;
 	}

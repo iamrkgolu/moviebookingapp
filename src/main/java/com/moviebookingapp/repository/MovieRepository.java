@@ -10,4 +10,6 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface MovieRepository extends JpaRepository<Movie, Integer>{
 
+	Movie findByMovieName(String movieName);
+
 }

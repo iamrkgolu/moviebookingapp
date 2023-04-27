@@ -14,5 +14,8 @@ public interface MovieService {
 	boolean deleteMovie(int movieId);
 
 	Movie getMovieById(int movieId);
+	Movie getMovieByMovieName(String movieName);
+
+	Movie updateMovie(String movieName, Movie movie);
 
 }

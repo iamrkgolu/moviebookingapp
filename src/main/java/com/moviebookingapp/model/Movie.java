@@ -1,7 +1,15 @@
 package com.moviebookingapp.model;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
@@ -11,7 +19,8 @@ public class Movie {
 	private int movieId;
 	private String movieName;
 	private String theatre;
-	private int totalNoOfTicketAlloated;
+	private BigDecimal totalNoOfTicketAlloated;
+	private int ticketId;
 
 	
 	
