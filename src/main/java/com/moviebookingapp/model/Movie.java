@@ -1,9 +1,10 @@
 package com.moviebookingapp.model;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
@@ -12,9 +13,8 @@ public class Movie {
 	@Id
 	private int movieId;
 	private String movieName;
-	private String theatre;
-	private BigDecimal totalNoOfTicketAlloated;
-	private int ticketId;
+	@OneToMany(targetEntity = Ticket.class)
+	private List<Ticket> ticket;
 
 	
 	

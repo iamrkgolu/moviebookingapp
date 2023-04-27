@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.moviebookingapp.model.Ticket;
 
 import jakarta.transaction.Transactional;
+
 @Repository
 @Transactional
-public interface TicketRepository extends JpaRepository<Ticket, Integer>{
+public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
 	Ticket findByTransactionIdAndMovieName(int ticketId, String moviename);
 

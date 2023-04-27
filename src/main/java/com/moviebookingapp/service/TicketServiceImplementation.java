@@ -6,23 +6,27 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.moviebookingapp.model.Movie;
 import com.moviebookingapp.model.Ticket;
 import com.moviebookingapp.repository.TicketRepository;
 
 @Service
-public class TicketServiceImplementation implements TicketService{
-	
+public class TicketServiceImplementation implements TicketService {
+
 	@Autowired
 	private TicketRepository ticketRepository;
-	
+
 	@Autowired
 	private MovieService movieService;
 
 	@Override
 	public Object bookTicket(String movieName, Ticket ticket) {
-		if(movieService.getMovieByMovieName(movieName)!=null) {
+		Movie movie = movieService.getMovieByMovieName(movieName);
+		if (movie != null) {
 			ticket.setMovieName(movieName);
-			return ticketRepository.save(ticket);
+			ticket.setRemaining(ticket.getCapacity().subtract(ticket.getSeatBooked()));
+			movie.setTicket(getTicketByMovieName(movieName));
+			return ticketRepository.saveAndFlush(ticket);
 		}
 		return null;
 	}
@@ -35,22 +39,23 @@ public class TicketServiceImplementation implements TicketService{
 	@Override
 	public boolean deleteTicket(int ticketId) {
 		Optional<Ticket> findById = ticketRepository.findById(ticketId);
-		if(findById.isPresent()) {
+		if (findById.isPresent()) {
 			ticketRepository.deleteById(ticketId);
 			return true;
-		}else {
+		} else {
 			return false;
-	}}
+		}
+	}
 
 	@Override
 	public Object updateMovie(int ticketId, String moviename, Ticket ticket) {
-		Ticket findedTicket=ticketRepository.findByTransactionIdAndMovieName(ticketId,moviename);
-		if(findedTicket!=null) {
+		Ticket findedTicket = ticketRepository.findByTransactionIdAndMovieName(ticketId, moviename);
+		if (findedTicket != null) {
 			findedTicket.setAddress(ticket.getAddress());
 			findedTicket.setMovieName(moviename);
 			findedTicket.setTheaterName(ticket.getTheaterName());
 			findedTicket.setTransactionId(ticketId);
-			ticketRepository.save(findedTicket);
+			ticketRepository.saveAndFlush(findedTicket);
 			ticket.setBookingDate(findedTicket.getBookingDate());
 			ticket.setBookingTime(findedTicket.getBookingTime());
 			return "Data Save";
@@ -60,13 +65,19 @@ public class TicketServiceImplementation implements TicketService{
 
 	@Override
 	public List<Ticket> getTicketByMovieName(String moviename) {
-		List<Ticket>findedTicket=ticketRepository.findByMovieName(moviename);
-		if(findedTicket!=null) {
+		List<Ticket> findedTicket = ticketRepository.findByMovieName(moviename);
+		if (findedTicket != null) {
 			return findedTicket;
-		}else {
-			return null;	
 		}
-		
+		return null;
 	}
-
+//    @Override
+//	public boolean deleteTicketByMovie(String movie) {
+//		List<Ticket> findByMovieName = ticketRepository.findByMovieName(movie);
+//		if(findByMovieName!=null) {
+//			ticketRepository.deleteByMovieName(findByMovieName);
+//			return true;
+//		}return false;
+//		
+//	}
 }

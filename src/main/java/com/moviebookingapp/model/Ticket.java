@@ -1,5 +1,6 @@
 package com.moviebookingapp.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -18,14 +19,21 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int transactionId;
-	@UpdateTimestamp
-	private Date bookingDate;
-	@UpdateTimestamp
-	private Time bookingTime;
+
 	@NotNull
 	private String movieName;
 	@NotNull
 	private String theaterName;
+	private BigDecimal capacity;
+	@NotNull
+	private BigDecimal seatBooked;
+	private BigDecimal remaining;
 	private String address;
+	
+	@UpdateTimestamp
+	private Date bookingDate;
+	@UpdateTimestamp
+	private Time bookingTime;
+
 
 }

@@ -21,19 +21,21 @@ import com.moviebookingapp.service.TicketService;
 @RestController
 @RequestMapping(value = "/api/v1.0/moviebooking")
 public class TicketController {
-	
+
 	@Autowired
 	private TicketService ticketService;
-	
+
 	@PostMapping(value = "/{movieName}/book")
-	public ResponseEntity<?> bookTicket(@PathVariable("movieName") String movieName, @RequestBody Ticket ticket) throws MovieIdAlreadyExistsExceptions {
-		if (ticketService.bookTicket(movieName,ticket) != null) {
+	public ResponseEntity<?> bookTicket(@PathVariable("movieName") String movieName, @RequestBody Ticket ticket)
+			throws MovieIdAlreadyExistsExceptions {
+		if (ticketService.bookTicket(movieName, ticket) != null) {
 			ticket.setMovieName(movieName);
 			return new ResponseEntity<Ticket>(ticket, HttpStatus.CREATED);
 		}
 
 		return new ResponseEntity<String>("Movie object is null", HttpStatus.NO_CONTENT);
 	}
+
 	@GetMapping(value = "/ticket/all")
 	public ResponseEntity<?> getAllTicket() {
 		List<Ticket> ticketList = ticketService.getAllTicket();
@@ -42,6 +44,7 @@ public class TicketController {
 		}
 		return new ResponseEntity<String>("Ticket List Empty!!", HttpStatus.NO_CONTENT);
 	}
+
 	@DeleteMapping(value = "/user/delete/{ticketId}")
 	public ResponseEntity<?> deleteMovie(@PathVariable("ticketId") int ticketId) {
 		if (ticketService.deleteTicket(ticketId)) {
@@ -50,16 +53,19 @@ public class TicketController {
 
 		return new ResponseEntity<String>("Ticket did not get deleted ", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
 	@PutMapping("/{moviename}/update/{ticketId}")
-	public ResponseEntity<?> updateMovie(@PathVariable("moviename") String moviename, @PathVariable("ticketId") int ticketId, @RequestBody Ticket ticket) throws MovieIdAlreadyExistsExceptions {
-			if(ticketService.updateMovie(ticketId,moviename,ticket)!=null) {
-				ticket.setMovieName(moviename);
-				ticket.setTransactionId(ticketId);
-				return new ResponseEntity<Ticket>(ticket, HttpStatus.CREATED);
+	public ResponseEntity<?> updateMovie(@PathVariable("moviename") String moviename,
+			@PathVariable("ticketId") int ticketId, @RequestBody Ticket ticket) throws MovieIdAlreadyExistsExceptions {
+		if (ticketService.updateMovie(ticketId, moviename, ticket) != null) {
+			ticket.setMovieName(moviename);
+			ticket.setTransactionId(ticketId);
+			return new ResponseEntity<Ticket>(ticket, HttpStatus.CREATED);
 		}
-		return new ResponseEntity<String>("No Ticket Found with Ticket id and movie name", HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>("No Ticket Found with Ticket id and movie name",
+				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 	@GetMapping(value = "/search/ticket/{moviename}")
 	public ResponseEntity<?> getTicketByMovieName(@PathVariable("moviename") String moviename) {
 		List<Ticket> ticketList = ticketService.getTicketByMovieName(moviename);
@@ -68,6 +74,5 @@ public class TicketController {
 		}
 		return new ResponseEntity<String>("Ticket List Empty!!", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
 
 }

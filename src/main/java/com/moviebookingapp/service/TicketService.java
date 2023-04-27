@@ -16,4 +16,8 @@ public interface TicketService {
 
 	List<Ticket> getTicketByMovieName(String moviename);
 
+//	boolean deleteTicketByMovie(String movie);
+	
+	
+
 }
