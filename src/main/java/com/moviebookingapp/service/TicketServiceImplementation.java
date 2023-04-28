@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.moviebookingapp.model.Movie;
 import com.moviebookingapp.model.Ticket;
+import com.moviebookingapp.repository.MovieRepository;
 import com.moviebookingapp.repository.TicketRepository;
 
 @Service
@@ -15,6 +16,9 @@ public class TicketServiceImplementation implements TicketService {
 
 	@Autowired
 	private TicketRepository ticketRepository;
+	
+	@Autowired
+	private MovieRepository movieRepository;
 
 	@Autowired
 	private MovieService movieService;
@@ -25,8 +29,9 @@ public class TicketServiceImplementation implements TicketService {
 		if (movie != null) {
 			ticket.setMovieName(movieName);
 			ticket.setRemaining(ticket.getCapacity().subtract(ticket.getSeatBooked()));
-			movie.setTicket(getTicketByMovieName(movieName));
-			return ticketRepository.saveAndFlush(ticket);
+			ticket.setMovie(movie);
+			return this.ticketRepository.saveAndFlush(ticket);
+			
 		}
 		return null;
 	}
