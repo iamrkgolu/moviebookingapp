@@ -19,4 +19,5 @@ public interface MovieService {
 
 	Movie updateMovie(String movieName, Movie movie);
 
+	List<String> getMoviesList();
 }

@@ -1,5 +1,6 @@
 package com.moviebookingapp.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,12 +27,14 @@ public class TicketServiceImplementation implements TicketService {
 	@Override
 	public Object bookTicket(String movieName, Ticket ticket) {
 		Movie movie = movieService.getMovieByMovieName(movieName);
-		if (movie != null) {
+		int bookedSeat = getAvailableSeatByMovieName(movieName);
+		System.out.println(bookedSeat);
+		int totalBookedSeat=bookedSeat+ticket.getSeatBooked();
+		if ((movie != null) && ((totalBookedSeat <= 100))) {
 			ticket.setMovieName(movieName);
-			ticket.setRemaining(ticket.getCapacity().subtract(ticket.getSeatBooked()));
+			ticket.setRemaining(ticket.getCapacity()-(ticket.getSeatBooked()));
 			ticket.setMovie(movie);
 			return this.ticketRepository.saveAndFlush(ticket);
-			
 		}
 		return null;
 	}
@@ -76,13 +79,15 @@ public class TicketServiceImplementation implements TicketService {
 		}
 		return null;
 	}
-//    @Override
-//	public boolean deleteTicketByMovie(String movie) {
-//		List<Ticket> findByMovieName = ticketRepository.findByMovieName(movie);
-//		if(findByMovieName!=null) {
-//			ticketRepository.deleteByMovieName(findByMovieName);
-//			return true;
-//		}return false;
-//		
-//	}
+
+	@Override
+	public int getAvailableSeatByMovieName(String movie) {
+		Integer bookedSeat = ticketRepository.totalBookingForMovie(movie);
+		if(bookedSeat!=null){
+			return bookedSeat;
+		}else{
+			bookedSeat=0;
+			return bookedSeat;
+		}
+	}
 }

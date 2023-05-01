@@ -68,4 +68,14 @@ public class MovieServiceImplementation implements MovieService {
 		return null;
 	}
 
+	@Override
+	public List<String> getMoviesList() {
+		List<String> listMovies = movieRepository.moviesName();
+		if(listMovies.isEmpty()){
+			return null;
+		}else{
+			return listMovies;
+		}
+	}
+
 }

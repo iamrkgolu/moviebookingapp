@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,10 +32,14 @@ public class Ticket {
 	private String movieName;
 	@NotNull
 	private String theaterName;
-	private BigDecimal capacity;
+	@JsonIgnore
+	private int capacity;
 	@NotNull
-	private BigDecimal seatBooked;
-	private BigDecimal remaining;
+	@Max(100)
+	@Min(1)
+	private int seatBooked;
+	@JsonIgnore
+	private int remaining;
 	private String address;
 	
 	@UpdateTimestamp
