@@ -33,8 +33,8 @@ public class MovieServiceImplementation implements MovieService {
 
 	@Override
 	public boolean deleteMovie(int movieId) {
-		Optional<Movie> findById = movieRepository.findById(movieId);
-		if (findById.isPresent()) {
+		Movie findById = movieRepository.findById(movieId).get();
+		if (findById.getMovieId()!=-1) {
 //			ticketService.deleteTicketByMovie(findById.get().getMovieName());
 			movieRepository.deleteById(movieId);
 			return true;
@@ -62,7 +62,13 @@ public class MovieServiceImplementation implements MovieService {
 		if (findByMovieName != null) {
 			Movie movie2 = new Movie();
 			movie2.setMovieName(movieName);
-			movie2.setMovieId(movie.getMovieId());
+			movie2.setMovieId(findByMovieName.getMovieId());
+			movie2.setActors(movie.getActors());
+			movie2.setGenre(movie.getGenre());
+			movie2.setDescription(movie.getDescription());
+			movie2.setLanguage(movie.getLanguage());
+			movie2.setReleaseDate(findByMovieName.getReleaseDate());
+
 			return movieRepository.saveAndFlush(movie2);
 		}
 		return null;

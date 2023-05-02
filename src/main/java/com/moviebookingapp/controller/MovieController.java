@@ -56,9 +56,11 @@ public class MovieController {
     @PutMapping("/admin/{movieName}/update")
     public ResponseEntity<?> updateMovie(@PathVariable("movieName") String movieName, @RequestBody Movie movie)
             throws MovieIdAlreadyExistsExceptions {
-
         if (movieService.updateMovie(movieName, movie) != null) {
+            Movie movieByMovieName = movieService.getMovieByMovieName(movieName);
             movie.setMovieName(movieName);
+            movie.setMovieId(movieByMovieName.getMovieId());
+            movie.setReleaseDate(movieByMovieName.getReleaseDate());
             return new ResponseEntity<Movie>(movie, HttpStatus.CREATED);
         }
         return new ResponseEntity<String>("No Movie Found with movie name", HttpStatus.NO_CONTENT);
