@@ -1,6 +1,5 @@
 package com.moviebookingapp.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.moviebookingapp.model.Movie;
 import com.moviebookingapp.model.Ticket;
-import com.moviebookingapp.repository.MovieRepository;
 import com.moviebookingapp.repository.TicketRepository;
 
 @Service
@@ -18,9 +16,6 @@ public class TicketServiceImplementation implements TicketService {
 	@Autowired
 	private TicketRepository ticketRepository;
 	
-	@Autowired
-	private MovieRepository movieRepository;
-
 	@Autowired
 	private MovieService movieService;
 
@@ -32,8 +27,9 @@ public class TicketServiceImplementation implements TicketService {
 		int totalBookedSeat=bookedSeat+ticket.getSeatBooked();
 		if ((movie != null) && ((totalBookedSeat <= 100))) {
 			ticket.setMovieName(movieName);
-			ticket.setRemaining(ticket.getCapacity()-(ticket.getSeatBooked()));
+			ticket.setRemaining(100-(ticket.getSeatBooked()));
 			ticket.setMovie(movie);
+			ticket.setCapacity(100);
 			return this.ticketRepository.saveAndFlush(ticket);
 		}
 		return null;
