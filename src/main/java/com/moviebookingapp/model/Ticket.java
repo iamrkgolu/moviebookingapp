@@ -19,7 +19,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-@Data
 @Entity
 public class Ticket {
 	@Id
@@ -50,5 +49,83 @@ public class Ticket {
     @JoinColumn(name = "movie_id", nullable = false)
 	private Movie movie;
 
+	public int getTransactionId() {
+		return transactionId;
+	}
 
+	public void setTransactionId(int transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public String getMovieName() {
+		return movieName;
+	}
+
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
+
+	public String getTheaterName() {
+		return theaterName;
+	}
+
+	public void setTheaterName(String theaterName) {
+		this.theaterName = theaterName;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public int getSeatBooked() {
+		return seatBooked;
+	}
+
+	public void setSeatBooked(int seatBooked) {
+		this.seatBooked = seatBooked;
+	}
+
+	public int getRemaining() {
+		return remaining;
+	}
+
+	public void setRemaining(int remaining) {
+		this.remaining = remaining;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getBookingDate() {
+		return bookingDate;
+	}
+
+	public void setBookingDate(Date bookingDate) {
+		this.bookingDate = bookingDate;
+	}
+
+	public Time getBookingTime() {
+		return bookingTime;
+	}
+
+	public void setBookingTime(Time bookingTime) {
+		this.bookingTime = bookingTime;
+	}
+
+	public Movie getMovie() {
+		return movie;
+	}
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
 }

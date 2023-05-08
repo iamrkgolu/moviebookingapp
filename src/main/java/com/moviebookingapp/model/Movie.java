@@ -15,7 +15,6 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
-@Data
 public class Movie {
 	@Id
 	private int movieId;
@@ -32,8 +31,74 @@ public class Movie {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "movie")
 	private List<Ticket> ticket;
 
-	
-	
-	
+	public int getMovieId() {
+		return movieId;
+	}
 
+	public int setMovieId(int movieId) {
+		this.movieId = movieId;
+		return movieId;
+	}
+
+	public String getMovieName() {
+		return movieName;
+	}
+
+	public String setMovieName(String movieName) {
+		this.movieName = movieName;
+		return movieName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String setDescription(String description) {
+		this.description = description;
+		return description;
+	}
+
+	public String getGenre() {
+		return genre;
+	}
+
+	public String setGenre(String genre) {
+		this.genre = genre;
+		return genre;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public String setLanguage(String language) {
+		this.language = language;
+		return language;
+	}
+
+	public List<String> getActors() {
+		return actors;
+	}
+
+	public List<String> setActors(List<String> actors) {
+		this.actors = actors;
+		return actors;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public Date setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+		return releaseDate;
+	}
+
+	public List<Ticket> getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(List<Ticket> ticket) {
+		this.ticket = ticket;
+	}
 }
