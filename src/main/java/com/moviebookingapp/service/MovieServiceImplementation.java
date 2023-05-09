@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.moviebookingapp.exceptions.MovieIdAlreadyExistsExceptions;
@@ -15,6 +16,9 @@ public class MovieServiceImplementation implements MovieService {
 
 	@Autowired
 	private MovieRepository movieRepository;
+
+	@Autowired
+	private KafkaTemplate<String,Movie> kafkaTemplate;
 	
 	@Override
 	public List<Movie> getAllMovies() {
@@ -28,6 +32,7 @@ public class MovieServiceImplementation implements MovieService {
 		if (findById.isPresent() || findByMovieName != null) {
 			throw new MovieIdAlreadyExistsExceptions();
 		}
+		kafkaTemplate.send("movie-app","Released Movie",movie);
 		return movieRepository.saveAndFlush(movie);
 	}
 
