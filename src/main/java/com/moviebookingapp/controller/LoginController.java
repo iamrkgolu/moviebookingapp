@@ -24,7 +24,7 @@ public class LoginController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> consumeLogin(@RequestBody UserDto userdto) throws RestClientException, Exception {
-		String baseUrl = "http://localhost:8081/auth/v1/login";// API consumption.. actual api is hidden -not exposed
+		String baseUrl = "http://localhost:8082/auth/v1/login";// API consumption.. actual api is hidden -not exposed
 
 		RestTemplate restTemplate = new RestTemplate();
 
