@@ -36,22 +36,27 @@ public class MovieServiceImplementation implements MovieService {
 		if (findById.isPresent() || findByMovieName != null) {
 			throw new MovieIdAlreadyExistsExceptions();
 		}
-		else {
-			
-			if(kafkaTemplate.getKafkaAdmin()!=null) {
-				saveAndFlush = movieRepository.saveAndFlush(movie);
-			    kafkaTemplate.send("movie-app","Released Movie",movie);
-				System.out.println("Kafka server working....");
-				return saveAndFlush;
-				
-			}else {
-				System.out.println("Kafka server not working....");
-				return movieRepository.saveAndFlush(movie);
-			}
-			
-		}
-//		kafkaTemplate.send("movie-app","Released Movie",movie);
-//		return movieRepository.saveAndFlush(movie);
+		/*
+		 * Need to fix issue because when kafka server is running it is working fine
+		 * But server is not running it throw error while adding movie
+		 */
+//		else {
+//			
+//			if(kafkaTemplate.getDefaultTopic()!=null) {
+//				System.out.println(kafkaTemplate.getDefaultTopic());
+//				saveAndFlush = movieRepository.saveAndFlush(movie);
+//			    kafkaTemplate.send("movie-app","Released Movie",movie);
+//				System.out.println("Kafka server working....");
+//				return saveAndFlush;
+//				
+//			}else {
+//				System.out.println("Kafka server not working....");
+//				return movieRepository.saveAndFlush(movie);
+//			}
+//			
+//		}
+		kafkaTemplate.send("movie-app","Released Movie",movie);
+		return movieRepository.saveAndFlush(movie);
 	}
 
 	@Override
