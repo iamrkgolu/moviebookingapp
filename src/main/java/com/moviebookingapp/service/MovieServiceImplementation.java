@@ -2,9 +2,11 @@ package com.moviebookingapp.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import com.moviebookingapp.exceptions.MovieIdAlreadyExistsExceptions;
@@ -19,6 +21,8 @@ public class MovieServiceImplementation implements MovieService {
 
 	@Autowired
 	private KafkaTemplate<String,Movie> kafkaTemplate;
+
+	private Movie saveAndFlush;
 	
 	@Override
 	public List<Movie> getAllMovies() {
@@ -32,8 +36,22 @@ public class MovieServiceImplementation implements MovieService {
 		if (findById.isPresent() || findByMovieName != null) {
 			throw new MovieIdAlreadyExistsExceptions();
 		}
-		kafkaTemplate.send("movie-app","Released Movie",movie);
-		return movieRepository.saveAndFlush(movie);
+		else {
+			
+			if(kafkaTemplate.getKafkaAdmin()!=null) {
+				saveAndFlush = movieRepository.saveAndFlush(movie);
+			    kafkaTemplate.send("movie-app","Released Movie",movie);
+				System.out.println("Kafka server working....");
+				return saveAndFlush;
+				
+			}else {
+				System.out.println("Kafka server not working....");
+				return movieRepository.saveAndFlush(movie);
+			}
+			
+		}
+//		kafkaTemplate.send("movie-app","Released Movie",movie);
+//		return movieRepository.saveAndFlush(movie);
 	}
 
 	@Override
