@@ -103,6 +103,7 @@
 				<version>3.7.0.1746</version>
 			</plugin>
 		</plugins>
+		<finalName>movie</finalName>
 	</build>
 
 </project>

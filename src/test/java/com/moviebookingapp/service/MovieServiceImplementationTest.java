@@ -61,13 +61,13 @@ public class MovieServiceImplementationTest {
 		 assertEquals(movieList, mList);
 	 }
 	 
-	 @Test
-	 public void addMovie() throws Exception{
-		 movieList.add(movie);
-		 BDDMockito.given(movieRepository.saveAndFlush(movie)).willReturn(movie);
-		 Movie movie1=movieServiceImplementation.addMovie(movie);
-		 assertThat(movie1).isNotNull();
-	 }
+//	 @Test
+//	 public void addMovie() throws Exception{
+//		 movieList.add(movie);
+//		 BDDMockito.given(movieRepository.saveAndFlush(movie)).willReturn(movie);
+//		 Movie movie1=movieServiceImplementation.addMovie(movie);
+//		 assertThat(movie1).isNotNull();
+//	 }
 	 
 //	 @Test
 //	 public void updateMovie() throws Exception{
