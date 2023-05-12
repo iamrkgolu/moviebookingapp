@@ -30,6 +30,26 @@ public class Movie {
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "movie")
 	private List<Ticket> ticket;
+	private int totalSeatBooked;
+	private int availableSeatsForBooking;
+
+	
+
+	public int getAvailableSeatsForBooking() {
+		return availableSeatsForBooking;
+	}
+
+	public void setAvailableSeatsForBooking(int availableSeatsForBooking) {
+		this.availableSeatsForBooking = availableSeatsForBooking;
+	}
+
+	public int getTotalSeatBooked() {
+		return totalSeatBooked;
+	}
+
+	public void setTotalSeatBooked(int totalSeatBooked) {
+		this.totalSeatBooked = totalSeatBooked;
+	}
 
 	public int getMovieId() {
 		return movieId;

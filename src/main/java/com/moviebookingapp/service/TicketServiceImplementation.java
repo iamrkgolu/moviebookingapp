@@ -30,6 +30,8 @@ public class TicketServiceImplementation implements TicketService {
 			ticket.setRemaining(100-(ticket.getSeatBooked()));
 			ticket.setMovie(movie);
 			ticket.setCapacity(100);
+			movie.setTotalSeatBooked(totalBookedSeat);
+			movie.setAvailableSeatsForBooking(100-totalBookedSeat);
 			return this.ticketRepository.saveAndFlush(ticket);
 		}
 		return null;
@@ -44,6 +46,10 @@ public class TicketServiceImplementation implements TicketService {
 	public boolean deleteTicket(int ticketId) {
 		Optional<Ticket> findById = ticketRepository.findById(ticketId);
 		if (findById.isPresent()) {
+			String movieName = findById.get().getMovieName();
+			Movie movie = movieService.getMovieByMovieName(movieName);
+			movie.setTotalSeatBooked(movie.getTotalSeatBooked()-findById.get().getSeatBooked());
+			movie.setAvailableSeatsForBooking(movie.getAvailableSeatsForBooking()+findById.get().getSeatBooked());
 			ticketRepository.deleteById(ticketId);
 			return true;
 		} else {
