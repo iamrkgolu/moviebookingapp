@@ -20,10 +20,10 @@ public class MovieServiceImplementation implements MovieService {
 	private MovieRepository movieRepository;
 
 	@Autowired
-	private KafkaTemplate<String,Movie> kafkaTemplate;
+	private KafkaTemplate<String, Movie> kafkaTemplate;
 
 	private Movie saveAndFlush;
-	
+
 	@Override
 	public List<Movie> getAllMovies() {
 		return movieRepository.findAll();
@@ -35,34 +35,20 @@ public class MovieServiceImplementation implements MovieService {
 		Movie findByMovieName = movieRepository.findByMovieName(movie.getMovieName());
 		if (findById.isPresent() || findByMovieName != null) {
 			throw new MovieIdAlreadyExistsExceptions();
+		} else {
+			try {
+				kafkaTemplate.send("movie-app", "Released Movie", movie);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			return movieRepository.saveAndFlush(movie);
 		}
-		/*
-		 * Need to fix issue because when kafka server is running it is working fine
-		 * But server is not running it throw error while adding movie
-		 */
-//		else {
-//			
-//			if(kafkaTemplate.getDefaultTopic()!=null) {
-//				System.out.println(kafkaTemplate.getDefaultTopic());
-//				saveAndFlush = movieRepository.saveAndFlush(movie);
-//			    kafkaTemplate.send("movie-app","Released Movie",movie);
-//				System.out.println("Kafka server working....");
-//				return saveAndFlush;
-//				
-//			}else {
-//				System.out.println("Kafka server not working....");
-//				return movieRepository.saveAndFlush(movie);
-//			}
-//			
-//		}
-		kafkaTemplate.send("movie-app","Released Movie",movie);
-		return movieRepository.saveAndFlush(movie);
 	}
 
 	@Override
 	public boolean deleteMovie(int movieId) {
 		Movie findById = movieRepository.findById(movieId).get();
-		if (findById.getMovieId()!=-1) {
+		if (findById.getMovieId() != -1) {
 //			ticketService.deleteTicketByMovie(findById.get().getMovieName());
 			movieRepository.deleteById(movieId);
 			return true;
@@ -105,9 +91,9 @@ public class MovieServiceImplementation implements MovieService {
 	@Override
 	public List<String> getMoviesList() {
 		List<String> listMovies = movieRepository.moviesName();
-		if(listMovies.isEmpty()){
+		if (listMovies.isEmpty()) {
 			return null;
-		}else{
+		} else {
 			return listMovies;
 		}
 	}
