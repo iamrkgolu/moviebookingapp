@@ -40,7 +40,9 @@ public class MovieServiceImplementation implements MovieService {
 				kafkaTemplate.send("movie-app", "Released Movie", movie);
 			} catch (Exception e) {
 				System.out.println(e);
+				
 			}
+			movie.setAvailableSeatsForBooking(100);
 			return movieRepository.saveAndFlush(movie);
 		}
 	}
