@@ -42,7 +42,7 @@ public class MovieServiceImplementation implements MovieService {
 				System.out.println(e);
 				
 			}
-			movie.setAvailableSeatsForBooking(100);
+			movie.setAvailableSeatsForBooking(movie.getTotalSeat());
 			return movieRepository.saveAndFlush(movie);
 		}
 	}
@@ -79,10 +79,6 @@ public class MovieServiceImplementation implements MovieService {
 			Movie movie2 = new Movie();
 			movie2.setMovieName(movieName);
 			movie2.setMovieId(findByMovieName.getMovieId());
-			movie2.setActors(movie.getActors());
-			movie2.setGenre(movie.getGenre());
-			movie2.setDescription(movie.getDescription());
-			movie2.setLanguage(movie.getLanguage());
 			movie2.setReleaseDate(findByMovieName.getReleaseDate());
 
 			return movieRepository.saveAndFlush(movie2);

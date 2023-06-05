@@ -4,7 +4,9 @@ import com.moviebookingapp.exceptions.MovieIdAlreadyExistsExceptions;
 import com.moviebookingapp.model.Movie;
 import com.moviebookingapp.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1.0/moviebooking")
+@CrossOrigin(origins = "*")
 public class MovieController {
 
     @Autowired
@@ -19,6 +22,7 @@ public class MovieController {
 
     @GetMapping(value = "/all")
     public ResponseEntity<?> getAllMovies() {
+    	
         List<Movie> movieList = movieService.getAllMovies();
         if (movieList != null) {
             return new ResponseEntity<List<Movie>>(movieList, HttpStatus.OK);

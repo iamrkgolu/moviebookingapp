@@ -31,7 +31,7 @@ public class TicketServiceImplementation implements TicketService {
 			ticket.setMovie(movie);
 			ticket.setCapacity(100);
 			movie.setTotalSeatBooked(totalBookedSeat);
-			movie.setAvailableSeatsForBooking(100-totalBookedSeat);
+			movie.setAvailableSeatsForBooking(movie.getTotalSeat()-totalBookedSeat);
 			return this.ticketRepository.saveAndFlush(ticket);
 		}
 		return null;

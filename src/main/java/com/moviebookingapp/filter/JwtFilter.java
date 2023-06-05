@@ -2,6 +2,9 @@ package com.moviebookingapp.filter;
 
 import java.io.IOException;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import io.jsonwebtoken.Claims;
@@ -20,6 +23,14 @@ public class JwtFilter extends GenericFilterBean{
 			throws IOException, ServletException {
 		HttpServletRequest httpReq = (HttpServletRequest) request;
 		HttpServletResponse httpRes = (HttpServletResponse) response;
+
+		httpRes.setHeader("Access-Control-Allow-Origin", "*");
+		httpRes.setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+		httpRes.setHeader("Accept", MediaType.APPLICATION_JSON_VALUE);
+		httpRes.setHeader("Access-Control-Allow-Credentials", "true");
+		httpRes.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		httpRes.setHeader("Access-Control-Max-Age", "3600");
+		httpRes.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, Authorization, remember-me");
 		
 		String authHeader = httpReq.getHeader("authorization");
 		

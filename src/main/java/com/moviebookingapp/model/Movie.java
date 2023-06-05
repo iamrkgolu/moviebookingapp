@@ -6,34 +6,36 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
-import lombok.Data;
 
 @Entity
 public class Movie {
 	@Id
 	private int movieId;
 	private String movieName;
-	@Lob
-	@Column(columnDefinition = "text")
-	private String description;
-	private String genre;
-	private String language;
-	private List<String> actors;
 	@CreationTimestamp
 	private Date releaseDate;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "movie")
 	private List<Ticket> ticket;
+	private int totalSeat;
 	private int totalSeatBooked;
 	private int availableSeatsForBooking;
+	
+	
 
 	
+
+	public int getTotalSeat() {
+		return totalSeat;
+	}
+
+	public void setTotalSeat(int totalSeat) {
+		this.totalSeat = totalSeat;
+	}
 
 	public int getAvailableSeatsForBooking() {
 		return availableSeatsForBooking;
@@ -69,41 +71,6 @@ public class Movie {
 		return movieName;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public String setDescription(String description) {
-		this.description = description;
-		return description;
-	}
-
-	public String getGenre() {
-		return genre;
-	}
-
-	public String setGenre(String genre) {
-		this.genre = genre;
-		return genre;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public String setLanguage(String language) {
-		this.language = language;
-		return language;
-	}
-
-	public List<String> getActors() {
-		return actors;
-	}
-
-	public List<String> setActors(List<String> actors) {
-		this.actors = actors;
-		return actors;
-	}
 
 	public Date getReleaseDate() {
 		return releaseDate;
