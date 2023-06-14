@@ -29,7 +29,7 @@ public class LoginController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> consumeLogin(@RequestBody UserDto userdto) throws RestClientException, Exception {
-		String baseUrl = "http://35.81.104.202:8082/auth/v1/login";// API consumption.. actual api is hidden -not exposed
+		String baseUrl = "http://localhost:8082/auth/v1/login";// API consumption.. actual api is hidden -not exposed
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -57,7 +57,7 @@ public class LoginController {
 	
 	@PostMapping("/addUser")
 	public ResponseEntity<?> registerUser(@RequestBody User user) throws RestClientException, Exception {
-		String baseUrl = "http://35.81.104.202:8082/auth/v1/addUser";// API consumption.. actual api is hidden -not exposed
+		String baseUrl = "http://localhost:8082/auth/v1/addUser";// API consumption.. actual api is hidden -not exposed
 		HttpEntity<User> httpEntity = new HttpEntity<User>(user, null);
 		RestTemplate restTemplate = new RestTemplate();
 		return restTemplate.exchange(baseUrl, HttpMethod.POST,httpEntity,User.class) ;
@@ -66,7 +66,7 @@ public class LoginController {
 	@PutMapping("/forgetPassword/{userId}")
 	public ResponseEntity<?> passwordReset(@PathVariable("userId") String userId, @RequestBody User user)
 	{
-		String baseUrl = "http://35.81.104.202:8082/auth/v1/forgetPassword/{userId}";
+		String baseUrl = "http://localhost:8082/auth/v1/forgetPassword/{userId}";
 //		HttpHeaders headers = new HttpHeaders();
 //		headers.setContentType(MediaType.APPLICATION_JSON);
 
