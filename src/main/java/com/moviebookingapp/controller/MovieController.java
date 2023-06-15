@@ -70,11 +70,11 @@ public class MovieController {
         return new ResponseEntity<String>("No Movie Found with movie name", HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping(value = "/movies/search/all")
-    public ResponseEntity<?> getMoviesList() {
-        List<String> movieList = movieService.getMoviesList();
-        if (movieList != null) {
-            return new ResponseEntity<List<String>>(movieList, HttpStatus.OK);
+    @GetMapping(value = "/movies/searchByName/{moviename}")
+    public ResponseEntity<?> getMoviesList(@PathVariable("moviename") String moviename) {
+       Movie movie = movieService.getMovieByMovieName(moviename);
+        if (movie != null) {
+            return new ResponseEntity<Movie>(movie, HttpStatus.OK);
         }
         return new ResponseEntity<String>("Movies List Empty!!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
